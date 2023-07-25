@@ -5,7 +5,9 @@ import com.veekhere.storebase.domain.model.OperationResultModel.OperationResult;
 import com.veekhere.storebase.domain.model.ProductModel.*;
 import com.veekhere.storebase.domain.repository.ProductRepository;
 import com.veekhere.storebase.domain.repository.entity.ProductEntity;
+import com.veekhere.storebase.domain.repository.entity.ProductProjectionEntity;
 import com.veekhere.storebase.domain.repository.mapper.ProductEntityMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,17 +16,22 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     public Collection<Product> searchProducts(ProductFilter filter) {
         ProductEntityMapper productEntityMapper = ProductEntityMapper.MAPPER;
-        List<ProductEntity> allProducts = productRepository.searchProducts(filter);
+        String filterJson = JsonService.toJson(filter);
+        List<ProductEntity> allProducts = productRepository.searchProducts(filterJson);
         return allProducts.stream().map(productEntityMapper::map).toList();
+    }
+
+    public Collection<ProductProjection> searchAllProducts(ProductProjectionFilter filter) {
+        ProductEntityMapper productEntityMapper = ProductEntityMapper.MAPPER;
+        String filterJson = JsonService.toJson(filter);
+        List<ProductProjectionEntity> productProjections = productRepository.searchAllProducts(filterJson);
+        return productProjections.stream().map(productEntityMapper::map).toList();
     }
 
     public Product getProduct(UUID id) {

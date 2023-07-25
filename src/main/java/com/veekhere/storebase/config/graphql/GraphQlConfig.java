@@ -1,4 +1,4 @@
-package com.veekhere.storebase.config;
+package com.veekhere.storebase.config.graphql;
 
 import graphql.scalars.ExtendedScalars;
 import org.springframework.context.annotation.Bean;

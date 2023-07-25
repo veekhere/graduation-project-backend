@@ -23,18 +23,23 @@ public class ProductController {
     }
 
     @QueryMapping
+    public Collection<ProductProjection> searchAllProducts(@Argument ProductProjectionFilter filter) {
+        return productService.searchAllProducts(filter);
+    }
+
+    @QueryMapping
     public Product getProduct(@Argument UUID id) {
         return productService.getProduct(id);
     }
 
     @MutationMapping
-    public OperationResult createProduct(@Argument ProductInput productInput) {
-        return productService.createProduct(productInput);
+    public OperationResult createProduct(@Argument ProductInput product) {
+        return productService.createProduct(product);
     }
 
     @MutationMapping
-    public OperationResult updateProduct(@Argument ProductInput productInput) {
-        return productService.updateProduct(productInput);
+    public OperationResult updateProduct(@Argument ProductInput product) {
+        return productService.updateProduct(product);
     }
 
     @MutationMapping

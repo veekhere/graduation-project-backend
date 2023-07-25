@@ -1,20 +1,37 @@
 type Product {
-    id: UUID
-    title: String
+    id: UUID!
+    title: String!
     description: String
-    price: BigDecimal
-    availableAmount: Int
+    price: BigDecimal!
+    availableAmount: Int!
+}
+
+type ProductProjection {
+    id: UUID!
+    title: String!
+    price: BigDecimal!
+    availableAmount: Int!
+    storeName: String!
 }
 
 input ProductInput {
     id: UUID
     title: String!
-    description: String!
+    description: String
     price: BigDecimal!
     availableAmount: Int!
+    store: UUID!
 }
 
 input ProductFilter {
+    store: UUID!
+    title: String
+    priceFrom: BigDecimal
+    priceTo: BigDecimal
+    isAvailable: Boolean
+}
+
+input ProductProjectionFilter {
     title: String
     priceFrom: BigDecimal
     priceTo: BigDecimal
@@ -23,11 +40,12 @@ input ProductFilter {
 
 extend type Query {
     searchProducts(filter: ProductFilter!): [Product]!
+    searchAllProducts(filter: ProductProjectionFilter!): [ProductProjection]!
     getProduct(id: UUID): Product
 }
 
 extend type Mutation {
-    createProduct(productInput: ProductInput): OperationResult!
-    updateProduct(productInput: ProductInput): OperationResult!
+    createProduct(product: ProductInput): OperationResult!
+    updateProduct(product: ProductInput): OperationResult!
     deleteProduct(id: UUID): OperationResult!
 }

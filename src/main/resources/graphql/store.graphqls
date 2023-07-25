@@ -1,0 +1,16 @@
+type Store {
+    id: UUID!
+    name: String!
+    description: String
+    products: [Product]!
+}
+
+input StoreInput {
+    id: UUID
+    name: String!
+    description: String
+}
+
+extend type Query {
+    searchStores: [Store]!
+}

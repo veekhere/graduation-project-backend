@@ -1,19 +1,22 @@
 package com.veekhere.storebase.domain.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@Table(name = "stores")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductEntity {
+public class StoreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,20 +24,14 @@ public class ProductEntity {
     UUID id;
 
     @Column(nullable = false)
-    String title;
+    String name;
 
     String description;
 
-    @Column(nullable = false)
-    BigDecimal price;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    List<ProductEntity> products;
 
-    @Column(nullable = false)
-    Integer availableAmount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    StoreEntity store;
-
-    public UUID getStore() {
-        return store.getId();
+    public StoreEntity(UUID id) {
+        this.id = id;
     }
 }
