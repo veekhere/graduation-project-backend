@@ -25,5 +25,5 @@ public abstract class ProductEntityMapper {
 
     public abstract ProductProjection map(ProductProjectionEntity productEntity);
 
-    public abstract ProductEntity map(ProductInput bookInput);
+    public abstract ProductEntity map(ProductInput productInput);
 }

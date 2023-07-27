@@ -2,6 +2,8 @@ package com.veekhere.storebase.controller;
 
 import com.veekhere.storebase.domain.model.OperationResultModel.*;
 import com.veekhere.storebase.domain.model.ProductModel.*;
+import com.veekhere.storebase.domain.model.ProductRatingModel;
+import com.veekhere.storebase.service.ProductRatingService;
 import com.veekhere.storebase.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final ProductRatingService productRatingService;
 
     @QueryMapping
     public Collection<Product> searchProducts(@Argument ProductFilter filter) {
@@ -45,5 +48,10 @@ public class ProductController {
     @MutationMapping
     public OperationResult deleteProduct(@Argument UUID id) {
         return productService.deleteProduct(id);
+    }
+
+    @MutationMapping
+    public OperationResult rateProduct(@Argument ProductRatingModel.ProductRatingInput rating) {
+        return productRatingService.rateProduct(rating);
     }
 }

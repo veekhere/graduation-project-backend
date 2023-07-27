@@ -23,6 +23,13 @@ input ProductInput {
     store: UUID!
 }
 
+input ProductRatingInput {
+    id: UUID
+    product: UUID!
+    rating: Int!
+    comment: String
+}
+
 input ProductFilter {
     store: UUID!
     title: String
@@ -38,6 +45,8 @@ input ProductProjectionFilter {
     isAvailable: Boolean
 }
 
+
+
 extend type Query {
     searchProducts(filter: ProductFilter!): [Product]!
     searchAllProducts(filter: ProductProjectionFilter!): [ProductProjection]!
@@ -48,4 +57,6 @@ extend type Mutation {
     createProduct(product: ProductInput): OperationResult!
     updateProduct(product: ProductInput): OperationResult!
     deleteProduct(id: UUID): OperationResult!
+
+    rateProduct(rating: ProductRatingInput!): OperationResult!
 }

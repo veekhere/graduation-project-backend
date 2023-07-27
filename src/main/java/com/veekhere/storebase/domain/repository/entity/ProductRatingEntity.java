@@ -1,40 +1,36 @@
 package com.veekhere.storebase.domain.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@Table(name = "product_rating")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductEntity {
+public class ProductRatingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false, updatable = false)
     UUID id;
 
-    @Column(nullable = false)
-    String title;
-
-    String description;
+    @OneToOne(cascade = CascadeType.MERGE)
+    ProductEntity product;
 
     @Column(nullable = false)
-    BigDecimal price;
+    Integer rating;
 
-    @Column(nullable = false)
-    Integer availableAmount;
+    String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    StoreEntity store;
-
-    public ProductEntity(UUID id) {
-        this.id = id;
+    public void setProduct(UUID id) {
+        this.product = new ProductEntity(id);
     }
 }

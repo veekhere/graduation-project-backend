@@ -49,6 +49,7 @@ public class ProductService {
             productRepository.save(entity);
             return new OperationResult(OperationStatus.SUCCESS);
         } catch (Exception e) {
+            System.out.println(e);
             return new OperationResult(OperationStatus.FAILED);
         }
     }
@@ -61,6 +62,7 @@ public class ProductService {
             productRepository.save(entity);
             return new OperationResult(OperationStatus.SUCCESS);
         } catch (Exception e) {
+            System.out.println(e);
             return new OperationResult(OperationStatus.FAILED);
         }
     }
