@@ -1,17 +1,22 @@
 package com.veekhere.storebase.domain.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.UUID;
 
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@NoArgsConstructor
+@Table(name = "product")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductEntity {
 
@@ -34,7 +39,19 @@ public class ProductEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     StoreEntity store;
 
-    public ProductEntity(UUID id) {
-        this.id = id;
+    transient Integer totalRatings = 0;
+
+    transient Float rating = 0F;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    List<ProductRatingEntity> ratings;
+
+    public Integer getTotalRatings() {
+        return ratings.size();
+    }
+
+    public Float getRating() {
+        OptionalDouble rating = ratings.stream().mapToLong(value -> value.getRating().longValue()).average();
+        return (float) rating.orElse(0);
     }
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "stores")
+@Table(name = "store")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StoreEntity {
 
@@ -30,8 +30,4 @@ public class StoreEntity {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     List<ProductEntity> products;
-
-    public StoreEntity(UUID id) {
-        this.id = id;
-    }
 }

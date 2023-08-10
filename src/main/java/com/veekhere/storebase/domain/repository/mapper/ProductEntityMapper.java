@@ -1,29 +1,28 @@
 package com.veekhere.storebase.domain.repository.mapper;
 
-import com.veekhere.storebase.domain.model.ProductModel.*;
+import com.veekhere.storebase.domain.dto.ProductProjectionDTO;
+import com.veekhere.storebase.domain.model.ProductModel.Product;
+import com.veekhere.storebase.domain.model.ProductModel.ProductInput;
+import com.veekhere.storebase.domain.model.ProductModel.ProductProjection;
 import com.veekhere.storebase.domain.repository.entity.ProductEntity;
-import com.veekhere.storebase.domain.repository.entity.ProductProjectionEntity;
-import com.veekhere.storebase.domain.repository.entity.StoreEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import java.util.UUID;
-
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = ProductRatingEntityMapper.class)
 public abstract class ProductEntityMapper {
     public static final ProductEntityMapper MAPPER = Mappers.getMapper(ProductEntityMapper.class);
 
-    public StoreEntity map(UUID id) {
-        if (id == null) {
-            return null;
-        }
-        return new StoreEntity(id);
-    }
-
+    @Mappings({
+        @Mapping(target = "ratings", qualifiedByName = { "ProductRatingEntityMapper", "mapWithoutProduct" }),
+        @Mapping(target = "totalRatings", expression = "java(productEntity.getTotalRatings())")
+    })
     public abstract Product map(ProductEntity productEntity);
 
-    public abstract ProductProjection map(ProductProjectionEntity productEntity);
+    public abstract ProductProjection map(ProductProjectionDTO productEntity);
 
+    @Mapping(source = "store", target = "store.id")
     public abstract ProductEntity map(ProductInput productInput);
 }

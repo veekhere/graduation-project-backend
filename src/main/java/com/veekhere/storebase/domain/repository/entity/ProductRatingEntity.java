@@ -22,15 +22,12 @@ public class ProductRatingEntity {
     @Column(nullable = false, updatable = false)
     UUID id;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
     ProductEntity product;
 
     @Column(nullable = false)
     Integer rating;
 
     String comment;
-
-    public void setProduct(UUID id) {
-        this.product = new ProductEntity(id);
-    }
 }

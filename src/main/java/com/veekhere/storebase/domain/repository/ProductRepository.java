@@ -1,7 +1,7 @@
 package com.veekhere.storebase.domain.repository;
 
+import com.veekhere.storebase.domain.dto.ProductProjectionDTO;
 import com.veekhere.storebase.domain.repository.entity.ProductEntity;
-import com.veekhere.storebase.domain.repository.entity.ProductProjectionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +15,5 @@ public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
     List<ProductEntity> searchProducts(@Param("filter") String filter);
 
     @Query(value = "SELECT * FROM search_all_products(CAST(:#{#filter} AS JSON));", nativeQuery = true)
-    List<ProductProjectionEntity> searchAllProducts(@Param("filter") String filter);
+    List<ProductProjectionDTO> searchAllProducts(@Param("filter") String filter);
 }

@@ -1,6 +1,6 @@
 package com.veekhere.storebase.controller;
 
-import com.veekhere.storebase.domain.model.OperationResultModel.*;
+import com.veekhere.storebase.domain.model.OperationResultModel.OperationResult;
 import com.veekhere.storebase.domain.model.ProductModel.*;
 import com.veekhere.storebase.domain.model.ProductRatingModel;
 import com.veekhere.storebase.service.ProductRatingService;

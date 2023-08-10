@@ -5,7 +5,7 @@ import com.veekhere.storebase.domain.model.OperationResultModel.OperationResult;
 import com.veekhere.storebase.domain.model.ProductModel.*;
 import com.veekhere.storebase.domain.repository.ProductRepository;
 import com.veekhere.storebase.domain.repository.entity.ProductEntity;
-import com.veekhere.storebase.domain.repository.entity.ProductProjectionEntity;
+import com.veekhere.storebase.domain.dto.ProductProjectionDTO;
 import com.veekhere.storebase.domain.repository.mapper.ProductEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class ProductService {
     public Collection<ProductProjection> searchAllProducts(ProductProjectionFilter filter) {
         ProductEntityMapper productEntityMapper = ProductEntityMapper.MAPPER;
         String filterJson = JsonService.toJson(filter);
-        List<ProductProjectionEntity> productProjections = productRepository.searchAllProducts(filterJson);
+        List<ProductProjectionDTO> productProjections = productRepository.searchAllProducts(filterJson);
         return productProjections.stream().map(productEntityMapper::map).toList();
     }
 
