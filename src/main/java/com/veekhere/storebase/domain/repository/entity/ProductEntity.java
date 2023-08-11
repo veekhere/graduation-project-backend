@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.UUID;
@@ -52,6 +53,7 @@ public class ProductEntity {
 
     public Float getRating() {
         OptionalDouble rating = ratings.stream().mapToLong(value -> value.getRating().longValue()).average();
-        return (float) rating.orElse(0);
+        BigDecimal formattedRating = new BigDecimal(rating.orElse(0)).setScale(2, RoundingMode.HALF_EVEN);
+        return formattedRating.floatValue();
     }
 }

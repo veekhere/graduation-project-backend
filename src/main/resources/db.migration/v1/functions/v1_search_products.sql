@@ -45,8 +45,8 @@ BEGIN
 
 -- transient or used for inheritors
 
-            COALESCE(ARRAY_LENGTH(array_agg(r) FILTER (WHERE r IS NOT NULL), 1), 0) AS totalRatings,
-            COALESCE(array_avg(array_agg(r.rating) FILTER (WHERE r IS NOT NULL)), 0) AS rating
+            COALESCE(ARRAY_LENGTH(array_agg(r) FILTER (WHERE r.rating IS NOT NULL), 1), 0) AS totalRatings,
+            COALESCE(array_avg(array_agg(r.rating) FILTER (WHERE r.rating IS NOT NULL)), 0) AS rating
 
         FROM
             product AS p
@@ -110,4 +110,3 @@ BEGIN
 		;
 END;
 $$;
-

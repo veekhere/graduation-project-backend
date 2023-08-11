@@ -5,7 +5,16 @@ import java.util.UUID;
 
 public class StoreModel {
 
-    public record Store(UUID id, String name, String description, List<ProductModel.Product> products) {}
+    public record Store(
+            UUID id,
+            String name,
+            String description,
+            List<ProductModel.Product> products
+    ) {}
+
+    public record StoreFilter(
+            String name
+    ) {}
 
     public record StoreInput(UUID id, String name, String description) {}
 }

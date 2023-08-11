@@ -5,16 +5,15 @@ import com.veekhere.storebase.domain.model.ProductModel.Product;
 import com.veekhere.storebase.domain.model.ProductModel.ProductInput;
 import com.veekhere.storebase.domain.model.ProductModel.ProductProjection;
 import com.veekhere.storebase.domain.repository.entity.ProductEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+@Named("ProductEntityMapper")
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = ProductRatingEntityMapper.class)
 public abstract class ProductEntityMapper {
     public static final ProductEntityMapper MAPPER = Mappers.getMapper(ProductEntityMapper.class);
 
+    @Named("mapFromEntity")
     @Mappings({
         @Mapping(target = "ratings", qualifiedByName = { "ProductRatingEntityMapper", "mapWithoutProduct" }),
         @Mapping(target = "totalRatings", expression = "java(productEntity.getTotalRatings())")

@@ -28,6 +28,6 @@ public class StoreEntity {
 
     String description;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     List<ProductEntity> products;
 }
