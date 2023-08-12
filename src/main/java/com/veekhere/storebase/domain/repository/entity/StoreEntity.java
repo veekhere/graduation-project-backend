@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.UUID;
 
 @Data
@@ -30,4 +33,19 @@ public class StoreEntity {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE)
     List<ProductEntity> products;
+
+    transient Float rating = 0F;
+
+    public Float getRating() {
+        OptionalDouble rating = products
+                .stream()
+                .mapToDouble(value -> value.getRating())
+                .filter(value -> value > 0D)
+                .average();
+
+        BigDecimal formattedRating = BigDecimal.valueOf(rating.orElse(0))
+                .setScale(2, RoundingMode.HALF_EVEN);
+
+        return formattedRating.floatValue();
+    }
 }

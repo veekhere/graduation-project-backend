@@ -52,8 +52,14 @@ public class ProductEntity {
     }
 
     public Float getRating() {
-        OptionalDouble rating = ratings.stream().mapToLong(value -> value.getRating().longValue()).average();
-        BigDecimal formattedRating = new BigDecimal(rating.orElse(0)).setScale(2, RoundingMode.HALF_EVEN);
+        OptionalDouble rating = ratings
+                .stream()
+                .mapToLong(value -> value.getRating().longValue())
+                .average();
+
+        BigDecimal formattedRating = BigDecimal.valueOf(rating.orElse(0))
+                .setScale(2, RoundingMode.HALF_EVEN);
+
         return formattedRating.floatValue();
     }
 }

@@ -24,13 +24,11 @@ public class StoreService {
     public Collection<Store> searchStores(StoreFilter filter) {
         StoreEntityMapper storeEntityMapper = StoreEntityMapper.MAPPER;
         String filterJson = JsonService.toJson(filter);
-//      TODO try catch
         List<StoreEntity> allStores = storeRepository.searchStores(filterJson);
         return allStores.stream().map(storeEntityMapper::map).toList();
     }
 
     public Store getStore(UUID id) {
-//      TODO try catch
         return storeRepository
                 .findById(id)
                 .map(StoreEntityMapper.MAPPER::map)

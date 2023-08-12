@@ -5,6 +5,7 @@ import com.veekhere.storebase.domain.model.StoreModel.StoreInput;
 import com.veekhere.storebase.domain.repository.entity.StoreEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -12,7 +13,10 @@ import org.mapstruct.factory.Mappers;
 public abstract class StoreEntityMapper {
     public static final StoreEntityMapper MAPPER = Mappers.getMapper(StoreEntityMapper.class);
 
-    @Mapping(target = "products", qualifiedByName = { "ProductEntityMapper", "mapFromEntity" })
+    @Mappings({
+        @Mapping(target = "products", qualifiedByName = { "ProductEntityMapper", "mapFromEntity" }),
+        @Mapping(target = "rating", expression = "java(storeEntity.getRating())")
+    })
     public abstract Store map(StoreEntity storeEntity);
 
     public abstract StoreEntity map(StoreInput bookInput);

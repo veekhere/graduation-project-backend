@@ -6,7 +6,8 @@ CREATE FUNCTION search_stores(params json)
     RETURNS TABLE (
         "id" uuid,
         name varchar(255),
-        description varchar(255)
+        description varchar(255),
+        products json
     )
     LANGUAGE plpgsql AS $$
 
@@ -23,10 +24,12 @@ BEGIN
         SELECT
             s.id,
             s.name,
-            s.description
+            s.description,
+            array_to_json(array_agg(p)) AS products
 
         FROM
-            store AS s
+            store AS s,
+            search_products(NULL) AS p
 
         WHERE (
 
@@ -34,7 +37,11 @@ BEGIN
             OR
             (LENGTH(f_name) = 0 AND s.name = s.name)
 
-        )
+        ) AND
+            p.store_id = s.id
+
+        GROUP BY
+            s.id
         ;
 END;
 $$;

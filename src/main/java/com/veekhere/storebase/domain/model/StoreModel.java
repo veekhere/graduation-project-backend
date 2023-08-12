@@ -9,7 +9,8 @@ public class StoreModel {
             UUID id,
             String name,
             String description,
-            List<ProductModel.Product> products
+            List<ProductModel.Product> products,
+            Float rating
     ) {}
 
     public record StoreFilter(

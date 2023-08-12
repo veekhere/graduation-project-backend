@@ -23,7 +23,6 @@ public class ProductService {
     public Collection<Product> searchProducts(ProductFilter filter) {
         ProductEntityMapper productEntityMapper = ProductEntityMapper.MAPPER;
         String filterJson = JsonService.toJson(filter);
-//      TODO try catch
         List<ProductEntity> allProducts = productRepository.searchProducts(filterJson);
         return allProducts.stream().map(productEntityMapper::map).toList();
     }
@@ -31,13 +30,11 @@ public class ProductService {
     public Collection<ProductProjection> searchAllProducts(ProductProjectionFilter filter) {
         ProductEntityMapper productEntityMapper = ProductEntityMapper.MAPPER;
         String filterJson = JsonService.toJson(filter);
-//      TODO try catch
         List<ProductProjectionDTO> productProjections = productRepository.searchAllProducts(filterJson);
         return productProjections.stream().map(productEntityMapper::map).toList();
     }
 
     public Product getProduct(UUID id) {
-//      TODO try catch
         return productRepository
                 .findById(id)
                 .map(ProductEntityMapper.MAPPER::map)
