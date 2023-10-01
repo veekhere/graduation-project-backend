@@ -1,1 +1,1 @@
-schema: './contracts/*.graphqls'
+schema: './contracts/**/*.graphqls'
