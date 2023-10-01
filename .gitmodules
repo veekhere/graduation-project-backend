@@ -1,0 +1,3 @@
+[submodule "src/main/resources/contracts"]
+	path = src/main/resources/contracts
+	url = git@github.com:veekhere/graduation-project-schema.git
