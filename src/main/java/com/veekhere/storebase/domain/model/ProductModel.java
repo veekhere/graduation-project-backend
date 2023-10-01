@@ -14,7 +14,8 @@ public class ProductModel {
             Integer availableAmount,
             Integer totalRatings,
             Float rating,
-            List<ProductRatingModel.ProductRating> ratings
+            List<ProductRatingModel.ProductRating> ratings,
+            UUID store
     ) {}
 
     public record ProductInput(

@@ -16,7 +16,8 @@ public abstract class ProductEntityMapper {
     @Named("mapFromEntity")
     @Mappings({
         @Mapping(target = "ratings", qualifiedByName = { "ProductRatingEntityMapper", "mapWithoutProduct" }),
-        @Mapping(target = "totalRatings", expression = "java(productEntity.getTotalRatings())")
+        @Mapping(target = "totalRatings", expression = "java(productEntity.getTotalRatings())"),
+        @Mapping(target = "store", expression = "java(productEntity.getStore().getId())")
     })
     public abstract Product map(ProductEntity productEntity);
 
